@@ -1,13 +1,15 @@
 package com.saketsatpute.multitenancy.configs;
 
-import com.zaxxer.hikari.HikariDataSource;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
-import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.Map;
+import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 public class DataSourceConfig {
@@ -20,7 +22,7 @@ public class DataSourceConfig {
 
     @Bean
     public DataSource dataSource() {
-        Map<Object, Object> targetDataSources = new HashMap<>();
+        Map<Object, Object> targetDataSources = new LinkedHashMap<>();
 
         tenantProperties.getShop().forEach((tenantId, config) -> {
             HikariDataSource ds = new HikariDataSource();
@@ -39,9 +41,10 @@ public class DataSourceConfig {
         };
 
         routingDataSource.setTargetDataSources(targetDataSources);
-        routingDataSource.setDefaultTargetDataSource(targetDataSources.values().iterator().next());
+        routingDataSource.setDefaultTargetDataSource(targetDataSources.get("shop1")); // default
         routingDataSource.afterPropertiesSet();
 
         return routingDataSource;
     }
+
 }

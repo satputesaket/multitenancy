@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.saketsatpute.multitenancy.configs.TenantContext;
 import com.saketsatpute.multitenancy.model.Product;
 import com.saketsatpute.multitenancy.repository.ProductRepository;
 import com.saketsatpute.multitenancy.service.ProductService;
@@ -20,8 +19,6 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getProducts(String shopId) {
-		// Set tenant before DB call
-		TenantContext.setTenant(shopId);
 		try {
 
 			List<com.saketsatpute.multitenancy.entity.Product> listProducts = productRepository.findAll();
@@ -42,7 +39,6 @@ public class ProductServiceImpl implements ProductService {
 
 			return listProductModel;
 		} finally {
-			TenantContext.clear();
 		}
 	}
 
