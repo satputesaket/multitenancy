@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <!-- Console output (for dev) -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p [tenant:%X{tenantId}] %c - %m%n"/>
+        </Console>
+
+        <!-- Routing appender based on tenantId -->
+        <Routing name="TenantRouting">
+            <Routes pattern="$${ctx:tenantId}">
+                <Route>
+                    <RollingFile name="TenantFile-${ctx:tenantId}"
+                                 fileName="logs/${ctx:tenantId}.log"
+                                 filePattern="logs/${ctx:tenantId}-%d{yyyy-MM-dd}.log.gz">
+                        <PatternLayout>
+                            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [tenant:%X{tenantId}] %logger - %msg%n</Pattern>
+                        </PatternLayout>
+                        <Policies>
+                            <TimeBasedTriggeringPolicy interval="1"/>
+                        </Policies>
+                    </RollingFile>
+                </Route>
+            </Routes>
+        </Routing>
+    </Appenders>
+
+    <Loggers>
+        <!-- Root logger sends to routing and console -->
+        <Root level="info">
+            <AppenderRef ref="TenantRouting"/>
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

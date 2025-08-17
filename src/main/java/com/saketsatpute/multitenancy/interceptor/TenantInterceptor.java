@@ -10,6 +10,7 @@ import com.saketsatpute.multitenancy.configs.TenantContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.ThreadContext;
 
 @Component
 public class TenantInterceptor implements HandlerInterceptor {
@@ -25,6 +26,9 @@ public class TenantInterceptor implements HandlerInterceptor {
             System.out.println(tenantId);
             if (tenantId != null) {
                 TenantContext.setTenant(tenantId);
+                ThreadContext.put("tenantId", tenantId); // 
+                System.out.println(ThreadContext.get("tenantId"));
+
             }
         }
 
@@ -34,6 +38,8 @@ public class TenantInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         TenantContext.clear();
+        ThreadContext.remove("tenantId");
+
     }
 }
 

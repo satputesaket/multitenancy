@@ -56,3 +56,37 @@ build/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# =====================
+# Java / Maven
+# =====================
+/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+/.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+/logs/
+!.gitignore
+
+# Eclipse / IntelliJ / VSCode
+/.idea/
+/*.iml
+/.classpath
+/.project
+/.settings/
+
+# Mac / Linux / Windows files
+.DS_Store
+Thumbs.db
+*.swp
+
+# Spring Boot
+spring-boot-devtools.log
+
+# Log files
+*.log
+logs/

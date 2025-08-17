@@ -2,6 +2,8 @@ package com.saketsatpute.multitenancy.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,9 @@ public class ProductController {
 	
 	@Autowired
 	ProductService productService;
+	
+    private static final Logger log = LoggerFactory.getLogger(ProductController.class);
+
 
 	@GetMapping(value="/health")
 	public Response helloWorld() {
@@ -37,6 +42,7 @@ public class ProductController {
 	
 	@GetMapping(value="{shopId}/v2/products")
 	public List<Product> getProductList(@PathVariable String shopId) {
+        log.info("Hello tenant!");
 		return productService.getProducts(shopId);
 	}
 
