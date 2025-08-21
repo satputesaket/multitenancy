@@ -45,13 +45,30 @@ public class ProductController {
 	}
 
 	@GetMapping(value = "{shopId}/v2/products")
-	public List<Product> getProductList(@PathVariable String shopId) {
+	public List<Product> getProductList() {
 		log.info("Hello tenant!");
-		return productService.getProducts(shopId);
+		return productService.getProducts();
 	}
 
 	@GetMapping(value = "{shopId}/v2/welcome")
-	public Response getWelcomeMessage(@PathVariable String shopId) {
+	public Response getWelcomeMessage() {
+		log.info("Hello tenant!");
+		Response response = new Response();
+		response.setCode("200");
+		response.setMessage(tenantMessages.getMessage("welcome", Locale.ENGLISH));
+
+		return response;
+	}
+	
+	
+	@GetMapping(value = "api/v3/products")
+	public List<Product> getProductListV3() {
+		log.info("Hello tenant!");
+		return productService.getProducts();
+	}
+
+	@GetMapping(value = "api/v3/welcome")
+	public Response getWelcomeMessageV3() {
 		log.info("Hello tenant!");
 		Response response = new Response();
 		response.setCode("200");

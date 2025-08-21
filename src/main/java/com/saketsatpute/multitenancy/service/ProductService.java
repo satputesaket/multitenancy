@@ -5,6 +5,6 @@ import com.saketsatpute.multitenancy.model.Product;
 
 public interface ProductService {
 
-	List<Product> getProducts(String shopId);
+	List<Product> getProducts();
 
 }

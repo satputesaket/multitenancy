@@ -18,7 +18,7 @@ public class ProductServiceImpl implements ProductService {
 	private ProductRepository productRepository;
 
 	@Override
-	public List<Product> getProducts(String shopId) {
+	public List<Product> getProducts() {
 		try {
 
 			List<com.saketsatpute.multitenancy.entity.Product> listProducts = productRepository.findAll();
